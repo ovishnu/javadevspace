@@ -1,0 +1,254 @@
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card ">
+				<div class="card-header" data-background-color="purple">
+					<h4 class="title">Our Patients</h4>
+					<!-- <p class="category">Complete your profile</p> -->
+					 <!-- <button class="category btn btn-deffault btn-sm addBtnBg"
+						data-toggle="modal" data-target="#addPatient">Add</button>  -->
+				</div>
+				<div style="padding: 2%">
+					<div >
+				      <label><input type="radio" name="optradio"> Mobile Number</label>
+				      <label><input type="radio" name="optradio"> Name</label>
+				    </div>
+    
+					<input type="text" placeholder="Search By"
+						style="width: 75%; margin: 0px !important">
+					<input type="button" 
+					style="width: 20%; color:#fff  margin: 0px !important" value="Search">
+					
+				</div> 
+				<div class="card-content table-responsive">
+					<table class="table table-hover">
+						<thead class="text-primary headerdata" />
+						<tbody class="rowdata">
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	var container = "content";
+	
+	var appointmentUrl = baseUrl + "/patient/all";
+	var jsonData = getJSON(appointmentUrl);
+
+	$('#app-search').click(function() {
+		$(".search-btn").removeAttr("disabled", "disabled");
+	});
+
+	function search() {
+		var number = $('#app-search').val();
+		var searchUrl = baseUrl + "/search/patient/by/contactNo/" + number;
+		var searchData = getJSON(searchUrl);
+		$('#app-search').val("");
+	}
+
+	function getJSON(url) {
+
+		$.ajax({
+			url : url,
+			type : "GET",
+			crossDomain : true,
+			timeout : 50000,
+			success : function(response) {
+				populateData(response);
+				console.log(response);
+				initClickEvent();
+
+			},
+			error : function(xhr, status, error) {
+			}
+		});
+
+	}
+	
+	function initClickEvent() {
+		$(".delbtn").click(function() {
+			//alert("deleting...");
+			var idStr = $(this).attr("id");
+			var id = idStr.split('_')[2];
+			url = baseUrl + "/patient/" + id;
+			//alert(url);
+			$.ajax({
+				url : url,
+				type : "DELETE",
+				crossDomain : true,
+				timeout : 50000,
+				success : function(response) {
+				},
+				error : function(xhr, status, error) {
+				}
+			});
+		});
+	
+	$(".editbtn").click(function() {
+				
+				//alert("heloo.... ");
+				var id = $(this).attr("id").split('_')[2];
+				var firstName = $("#patient_firstname_" + id).text();
+				var lastName = $("#patient_lastName_" + id).text();
+				var email = $("#patient_email_" + id).text();
+				var age = $("#patient_age_" + id).text();
+				var address = $("#patient_address_" + id).text();
+				var contactNo = $("#patient_contactNo_" + id).text();
+				var gender = $("#patient_gender_" + id).text();
+				//alert(" role  "+role);
+				
+				$(".edit_patient_id").val(id);
+				$(".edit_patient_firstname").val(firstName);
+				$(".edit_patient_lastName").val(lastName);
+				$(".edit_patient_email").val(email);
+				$(".edit_patient_age").val(age);
+				$(".edit_patient_address").val(address);
+				$(".edit_patient_contactNo").val(contactNo);
+				$(".edit_patient_gender").val(gender);
+				
+				
+			});
+	
+	$(".edit-patient-btn").click(function() {
+		
+		
+		var id = $(".edit_patient_id").val();
+		var firstName = $(".edit_patient_firstname").val();
+		var lastName = $(".edit_patient_lastName").val();
+		var email = $(".edit_patient_email").val();
+		var age = $(".edit_patient_age").val();
+		var address =  $(".edit_patient_address").val();
+		var contactNo =  $(".edit_patient_contactNo").val();
+		var gender =  $(".edit_patient_gender").val();
+		
+		var jsondata = {};
+		jsondata["id"]= id;
+		jsondata["firstName"]= firstName;
+		jsondata["lastName"]= lastName;
+		jsondata["age"] = age;
+		jsondata["email"]= email;
+		jsondata["address"]= address;
+		jsondata["contactNo"]= contactNo;
+		jsondata["gender"]= gender;
+					
+		url = baseUrl + "/patient/"+id;
+		callAjaxPostJSON(url, "PUT", "", jsondata);
+		clearForm();
+	});
+	
+	}
+
+	
+	
+	
+	function populateData(response) {
+        //alert("hello "+response);
+			
+			var headerdataStr = "";
+			
+			
+			 headerdataStr = headerdataStr + "<th>S.N.</th>" + "<th>First Name</th>" + "<th>Last Name</th>"
+					+  "<th>Age</th>" +  "<th>Address</th>" +  "<th>Contact No</th>" +  "<th>Gender</th>" + "<th>E-mail</th>"; 
+
+			$('.headerdata').html(headerdataStr);
+
+			var rowDataStr = ""; 
+			
+			 for (i = 0; i < response.length; i++) {
+				//alert(JSON.stringify(response[i].roles[0].role));
+
+				//var id = response[i].appointmentId;
+				
+				rowDataStr = rowDataStr
+						+ "<tr id='row_" + response[i].id + "'>"
+						
+						+ "<td id='patient_id_" + response[i].id + "'>"
+						+ response[i].id
+						+ "</td>"
+						
+						+ "<td id='patient_firstname_" + response[i].id + "'>"
+						+ response[i].firstName
+						+ "</td>"
+						
+						+ "<td id='patient_lastName_" + response[i].id + "'>"
+						+ response[i].lastName
+						+ "</td>"
+						
+						+ "<td id='patient_age_" + response[i].id + "'>"
+						+ response[i].age
+						+ "</td>"
+						
+						+ "<td id='patient_address_" + response[i].id + "'>"
+						+ response[i].address
+						+ "</td>"
+						
+						+ "<td id='patient_contactNo_" + response[i].id + "'>"
+						+ response[i].contactNo
+						+ "</td>"
+						
+						+ "<td id='patient_gender_" + response[i].id + "'>"
+						+ response[i].gender
+						+ "</td>"
+						
+						+ "<td id='patient_email_" + response[i].id + "'>"
+						+ response[i].email
+						+ "</td>"
+						
+						+ "<td>"
+
+						+ "<button id='patient_editbtn_" + response[i].id + "' class='btn-primary editbtn' style='border: transparent; margin: 0.5%' data-toggle='modal'" + "data-target='#editPatient' title='Edit User'>"
+						+ "<span class='glyphicon glyphicon-pencil'></span>"
+						+ "</button>"
+
+						+ "<button id='patient_delbtn_" + response[i].id + "' class='btn-primary delbtn' style='border: transparent; margin: 0.5%' title='Cancel User'>"
+						+ "<span class='glyphicon glyphicon-remove'></span>" + "</button></td>"
+
+						+ "</tr>";
+			} 
+			$('.rowdata').html(rowDataStr);
+		}
+		
+		function callAjaxPostJSON(urlMapping, callType, container, data) {
+
+			$.ajax({
+				type : callType,
+				contentType : "application/json",
+				url : urlMapping,
+				data : JSON.stringify(data),
+				crossDomain : true,
+				dataType : 'json',
+				timeout : 100000,
+				success : function(response) {
+					console.log("SUCCESS: ", response);
+					if (!response.error)
+						location.reload(true);
+					//window.location.reload();
+				},
+				error : function(xhr, status, error) {
+					console.log("ERROR: ", error);
+
+				},
+				done : function(e) {
+					console.log("DONE");
+				}
+			});
+
+		}
+		
+		
+		function clearForm() {
+
+			$(".form-control").val("");
+		}
+
+	
+
+	</script>
+
+

@@ -1,0 +1,379 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="card">
+				<div class="card-header" data-background-color="purple">
+					<h4 class="title">Appointments List</h4>
+					<!-- <p class="category">Recently book for appointment</p> -->
+					<button class="category btn btn-default btn-sm addBtnBg"
+						data-toggle="modal" data-target="#addAppo">Add</button>
+
+				</div>
+				<!-- div style="padding: 2%">
+										
+					<input id="app-search" type="text"  placeholder="Search Appointment By Mobile number e.g 9742503868"
+						style="width: 60%; margin: 0px !important">
+					<button class="btn btn-default btn-sm search-btn" disabled="true"  onclick="search();"
+					style="width: 39%; color:#fff  margin: 0px !important">Search</button>
+					
+				</div-->
+
+				<div style="padding: 2%">
+					<div>
+					
+					 <!--  label><input type="radio" name="gender" value="male">Male</label--> 
+					
+						<label><input type="radio" name="optradio" value="contactNo"> Mobile
+							Number</label> <label><input type="radio" name="optradio" value="name">
+							Name</label>
+					</div>
+
+					<input id="app-search" type="text" placeholder="Search By"
+						style="width: 75%; margin: 0px !important"> <input
+						type="button" class="search-btn" disabled="true"
+						onclick="search();"
+						style="width: 20%; color: #fff margin: 0px !important"
+						value="Search">
+
+				</div>
+				<div class="card-content table-responsive">
+					<table class="table table-hover">
+						<thead class="text-primary headerdata">
+						</thead>
+						<tbody class="rowdata">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var container = "content";
+	
+	var appointmentUrl = baseUrl + "/appointment/all";
+	var jsonData = getJSON(appointmentUrl);
+
+	$('#app-search').click(function() {
+		$(".search-btn").removeAttr("disabled", "disabled");
+	});
+
+	function search() {		
+		 var radioValue = $("input[name='optradio']:checked").val();
+         if(radioValue){
+            // alert("Your have selected - " + radioValue);
+         }         
+		var number = $('#app-search').val();
+		var searchUrl = baseUrl + "/search/appointment/by/"+radioValue+"/" + number;
+		var searchData = getJSON(searchUrl);
+		$('#app-search').val("");
+	}
+
+	function getJSON(url) {
+
+		$.ajax({
+			url : url,
+			type : "GET",
+			crossDomain : true,
+			timeout : 50000,
+			success : function(response) {
+				populateData(response);
+				initClickEvent();
+
+			},
+			error : function(xhr, status, error) {
+			}
+		});
+
+	}
+
+	function initClickEvent() {
+		$(".delbtn").click(function() {
+			var idStr = $(this).attr("id");
+			var id = idStr.split('_')[3];
+			var deleteAppointmentUrl = baseUrl + "/appointment/" + id;
+			//alert(url);
+			$.ajax({
+				url : deleteAppointmentUrl,
+				type : "DELETE",
+				crossDomain : true,
+				timeout : 50000,
+				success : function(response) {
+				},
+				error : function(xhr, status, error) {
+				}
+			});
+
+		});
+
+		$(".add-appointment-btn")
+				.click(
+						function() {
+
+							//alert("adding");
+							var firstName = $(".add_appointment_firstName")
+									.val();
+							var lastName = $(".add_appointment_lastName").val();
+							var age = $(".add_appointment_age").val();
+							var address = $(".add_appointment_address").val();
+							var contactNo = $(".add_appointment_contactNo")
+									.val();
+							var gender = $(
+									".add_appointment_gender option:selected")
+									.text();
+							var email = $(".add_appointment_email").val();
+							var referredByDoctorId = $(
+									".add_appointment_referredByDoctorId option:selected")
+									.val();
+							var serviceTypeId = $(
+									".add_appointment_serviceTypeId option:selected")
+									.val();
+							var dateTime = $(".add_appointment_dateTime").val();
+
+							var jsondata = {};
+							jsondata["firstName"] = firstName;
+							jsondata["lastName"] = lastName;
+							jsondata["age"] = age;
+							jsondata["address"] = address;
+							jsondata["contactNo"] = contactNo;
+							jsondata["gender"] = gender;
+							jsondata["email"] = email;
+							jsondata["referredByDoctorId"] = referredByDoctorId;
+							jsondata["serviceTypeId"] = serviceTypeId;
+							jsondata["dateTime"] = "";
+							jsondata["status"] = "";
+							jsondata["slot"] = 1;
+							jsondata["token"] = 1412412;
+							jsondata["createdByUserId"] = 1;
+
+							//alert(JSON.stringify(jsondata));
+						
+							var appointmentAddUrl = baseUrl + "/appointment/add";
+							callAjaxPostJSON(appointmentAddUrl, "POST", "", jsondata);
+							clearForm();
+						});
+
+		$(".editbtn").click(
+				function() {
+					var id = $(this).attr("id").split('_')[3];
+
+					var firstName = $("#appointment_firstName_" + id).text();
+					var lastName = $("#appointment_lastName_" + id).text();
+					var address = $("#appointment_address_" + id).text();
+					var dateTime = $("#appointment_dateTime_" + id).text();
+					var serviceTypeId = $("#appointment_serviceTypeId_" + id)
+							.text();
+					var age = $("#appointment_age_" + id).text();
+					var contactNo = $("#appointment_contactNo_" + id).text();
+					var gender = $("#appointment_gender_" + id).text();
+					var referredByDoctorId = $(
+							"#appointment_referredByDoctorId_" + id).text();
+					var createdByUserId = $(
+							"#appointment_createdByUserId_" + id).text();
+					var slot = $("#appointment_slot_" + id).text();
+					var token = $("#appointment_token_" + id).text();
+					var status = $("#appointment_status_" + id).text();
+
+					$(".edit_appointment_firstName").val(firstName);
+					$(".edit_appointment_lastName").val(lastName);
+					$(".edit_appointment_age").val(age);
+					$(".edit_appointment_address").val(address);
+					$(".edit_appointment_contactNo").val(contactNo);
+					//$(".edit_appointment_gender option:selected").text();
+					$(".edit_appointment_email").val(email);
+					//$(".edit_appointment_referredByDoctorId option:selected").val();
+					//$(".edit_appointment_serviceTypeId option:selected").val();
+					$(".edit_appointment_dateTime").val(dateTime);
+
+				});
+
+		$(".save-update-btn")
+				.click(
+						function() {
+
+							var firstName = $(".edit_appointment_firstName")
+									.val();
+							var lastName = $(".edit_appointment_lastName")
+									.val();
+							var age = $(".edit_appointment_age").val();
+							var address = $(".edit_appointment_address").val();
+							var contactNo = $(".edit_appointment_contactNo")
+									.val();
+							var gender = $(
+									".edit_appointment_gender option:selected")
+									.text();
+							var email = $(".edit_appointment_email").val();
+							var referredByDoctorId = $(
+									".edit_appointment_referredByDoctorId option:selected")
+									.val();
+							var serviceTypeId = $(
+									".edit_appointment_serviceTypeId option:selected")
+									.val();
+							var dateTime = $(".edit_appointment_dateTime")
+									.val();
+
+							var jsondata = {};
+							//jsondata["id"]=firstName;
+							//jsondata["patientId"]=firstName;
+
+							jsondata["firstName"] = firstName;
+							jsondata["lastName"] = lastName;
+							jsondata["age"] = age;
+							jsondata["address"] = address;
+							jsondata["contactNo"] = contactNo;
+							jsondata["gender"] = gender;
+							jsondata["email"] = email;
+							jsondata["referredByDoctorId"] = referredByDoctorId;
+							jsondata["serviceTypeId"] = serviceTypeId;
+							jsondata["dateTime"] = "";
+							jsondata["status"] = "";
+							jsondata["slot"] = 1;
+							jsondata["token"] = 1412412;
+							jsondata["createdByUserId"] = 1;
+
+							//alert(JSON.stringify(jsondata));
+
+							var urlPerfix = "http://localhost:8080";
+							url = urlPerfix + "/appointment/" + id;
+							//alert(JSON.stringify(url));
+							callAjaxPostJSON(url, "PUT", "", jsondata);
+							clearForm();
+
+						});
+
+		$(".printbtn").click(function() {
+			alert("Bill Generate Successfully!");
+			//To be done
+
+		});
+
+	}
+
+	function clearForm() {
+
+		$(".form-control").val("");
+	}
+
+	function callAjaxPostJSON(urlMapping, callType, container, data) {
+
+		$.ajax({
+			type : callType,
+			contentType : "application/json",
+			url : urlMapping,
+			data : JSON.stringify(data),
+			crossDomain : true,
+			dataType : 'json',
+			timeout : 100000,
+			success : function(response) {
+				console.log("SUCCESS: ", data);
+				if (!data.error)
+					location.reload(true);
+				//window.location.reload();
+			},
+			error : function(xhr, status, error) {
+				console.log("ERROR: ", error);
+
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+
+	}
+
+	function populateData(response) {
+		var headerdataStr = "";
+		headerdataStr = headerdataStr + "<th>S.N.</th>" + "<th>Date</th>"
+				+ "<th>Services</th>" + "<th>Name</th>" + "<th>Age</th>"
+				+ "<th>Contact</th>" + "<th>Gender</th>"
+				+ "<th>Ref. Doctor</th>" + "<th>Created By</th>"
+				+ "<th>Token</th>" + "<th>Slot</th>" + "<th>Staus</th>"
+				+ "<th>Action</th>";
+
+		$('.headerdata').html(headerdataStr);
+		
+		var rowDataStr = "";
+		//alert(response.length);
+		for (i = 0; i < response.length; i++) {
+			//alert(JSON.stringify(response[i]));
+			//alert(response[i].appointmentId);
+
+			var id = response[i].appointmentId;
+			rowDataStr = rowDataStr
+					+ "<tr id='row_" + id + "'>"
+
+					+ "<td id='appointment_id_" + id + "'>"
+					+ id
+					+ "</td>"
+
+					+ "<td id='appointment_dateTime_" + id + "'>"
+					+ response[i].dateTime
+					+ "</td>"
+
+					+ "<td id='appointment_serviceTypeId_" + id + "'>"
+					+ response[i].serviceTypeId
+					+ "</td>"
+
+					+ "<td id='appointment_firstName_" + id + "'>"
+					+ response[i].patient.firstName
+					+ "</td>"
+
+					+ "<td id='appointment_age_" + id + "'>"
+					+ response[i].patient.age
+					+ "</td>"
+
+					+ "<td id='appointment_contactNo_" + id + "'>"
+					+ response[i].patient.contactNo
+					+ "</td>"
+
+					+ "<td id='appointment_gender_" + id + "'>"
+					+ response[i].patient.gender
+					+ "</td>"
+
+					+ "<td id='appointment_referredByDoctorId_" + id + "'>"
+					+ response[i].referredByDoctor.name
+					+ "</td>"
+
+					+ "<td id='appointment_createdByUserId_" + id + "'>"
+					+ response[i].createdByUserId.name
+					+ "</td>"
+
+					+ "<td id='appointment_slot_" + id + "'>"
+					+ response[i].slot
+					+ "</td>"
+
+					+ "<td id='appointment_token_" + id + "'>"
+					+ response[i].token
+					+ "</td>"
+
+					+ "<td id='appointment_status_" + id + "'>"
+					+ response[i].status
+					+ "</td>"
+
+					+ "<td>"
+					+ "<button id='edit_appointment_btn_" + id + "' class='btn-primary editbtn' data-toggle='modal'" + "data-target='#appoEditModal' title='Edit Appointment'>"
+					+ "<span class='glyphicon glyphicon-pencil'></span>"
+					+ "</button>"
+
+					+ "<button id='print_appointment_btn_" + id + "' class='btn-primary printbtn' data-toggle='modal' data-target='#appoPrinttModal' title='Generat Bill'>"
+					+ "<span class='glyphicon glyphicon-print'></span>"
+					+ "</button>"
+
+					+ "<button id='delete_appointment_btn_" + id + "' class='btn-primary delbtn' title='Cancel Appointment'>"
+					+ "<span class='glyphicon glyphicon-remove'></span>"
+					+ "</button></td>"
+
+					+ "</tr>";
+		}
+		$('.rowdata').html("");
+		$('.rowdata').html(rowDataStr);
+
+	}
+</script>
+<style>
+.multiselect .dropdown-toggle .btn .btn-default{
+	width:100% !important;
+}
+</style>

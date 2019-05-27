@@ -1,0 +1,115 @@
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card ">
+				<div class="card-header" data-background-color="purple">
+					<h4 class="title">User Permission</h4>
+					<!-- <p class="category">Choose NGO</p> -->
+					<button class="category btn btn-default btn-sm addBtnBg" data-toggle="modal"
+						data-target="#addPermission">Add</button>
+				</div>
+				<!-- <div style="padding:2%"><input class="form-control"type="text" placeholder="Search...." style="width:100%"></div> -->
+				<div class="card-content table-responsive">
+					<table class="table table-hover">
+						<thead class="text-primary headerdata" />
+						<tbody class="rowdata" />
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(".saveBtn").click(function() {
+	//alert("Permmission Allow....!!! ");
+	//To be done
+});
+
+var container = "content";
+var urlPerfix = baseUrl;
+url = urlPerfix + "/users";
+var jsonData = getJSON(url);
+
+
+function getJSON(url) {
+//alert("hi...");
+	$.ajax({
+		url : url,
+		type : "GET",
+		crossDomain : true,
+		timeout : 50000,
+		success : function(response) {
+
+			populateData(response);
+			//initClickEvent();
+		},
+		error : function(xhr, status, error) {
+		}
+	});
+
+}
+
+function populateData(response) {
+    //alert("hello "+response);
+		
+		var headerdataStr = "";
+		
+		
+		 headerdataStr = headerdataStr + "<th>S.N.</th>" + "<th>Role</th>"
+		 +  "<th>All</th>"  +  "<th>Add</th>" +  "<th>Edit</th>" + "<th>Delete</th>" + "<th>Action</th>"; 
+
+		$('.headerdata').html(headerdataStr);
+
+		var rowDataStr = ""; 
+		
+		 for (i = 0; i < response.length; i++) {
+			//alert(JSON.stringify(response[i].roles[0].role));
+
+			//var id = response[i].appointmentId;
+			
+			rowDataStr = rowDataStr
+					+ "<tr id='row_" + response[i].id + "'>"
+					
+					+ "<td id='user_id_" + response[i].id + "'>"
+					+ response[i].id
+					+ "</td>"
+					
+					
+					+ "<td  id='userRole_name_" + response[i].id + "'>"
+					+ response[i].roles[0].role
+					+ "</td>"
+					
+					+ "<td>"
+					+ "<input type='checkbox'  id='userRole_all_"+response[i].id +"	style='border: transparent; margin: 0.5%; '>"
+					+ "</td>"
+					
+					
+					+ "<td>"
+					+ "<input type='checkbox'  id='userRole_add_"+response[i].id +"	style='border: transparent; margin: 0.5%; '>"
+					+ "</td>"
+					
+					+ "<td>"
+					+ "<input type='checkbox'  id='userRole_edit_"+response[i].id +"	style='border: transparent; margin: 0.5%; '>"
+					+ "</td>"
+					
+					+ "<td>"
+					+ "<input type='checkbox'  id='userRole_delete_"+response[i].id +"	style='border: transparent; margin: 0.5%; '>"
+					+ "</td>"
+					
+					+ "<td>"
+
+					+ "<button id='userRole_savebtn_" + response[i].id + "' class='btn-primary saveBtn'>"
+					+ "<span class='glyphicon glyphicon-floppy-disk'></span>"
+					+ "</button>"
+
+					+ "<button id='userRole_delbtn_" + response[i].id + "'  class='btn-primary'>"
+					+ "<span class='glyphicon glyphicon-remove'></span>" + "</button></td>"
+
+					+ "</tr>";
+		} 
+		$('.rowdata').html(rowDataStr);
+
+	}
+
+</script>

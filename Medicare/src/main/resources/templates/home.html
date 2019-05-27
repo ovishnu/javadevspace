@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon.png" />
+<link rel="icon" type="image/png" href="img/favicon.png" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>Admin</title>
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
+<meta name="viewport" content="width=device-width" />
+<link href="css/material-dashboard.css" rel="stylesheet" />
+<!-- Bootstrap core CSS     -->
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/jquery.datetimepicker.css" rel="stylesheet" />
+<!--  Material Dashboard CSS    -->
+
+<!--  CSS for Demo Purpose, don't include it in your project     -->
+<link href="css/demo.css" rel="stylesheet" />
+<!--     Fonts and icons     -->
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link href="fonts/glyphicons-halflings-regular.woff">
+<link href="fonts/glyphicons-halflings-regular.eot">
+<link href="fonts/fontawesome-webfont.woff">
+<link href="fonts/fontawesome-webfont.eot">
+<link rel="stylesheet" href="css/formValidation.min.css">
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<!-- Load billboard.js with style -->
+<script src="stats/billboard.js"></script>
+<link rel="stylesheet" href="stats/billboard.css">
+<link rel="stylesheet" href="css/daterangepicker.css">
+<link rel="stylesheet" href="css/bootstrap-multiselect.css">
+<style>
+.nav li .glyphicon {
+	margin-left: 3% !important;
+	margin-right: 3% !important;
+	font-size: 20px;
+}
+
+.card-header .glyphicon {
+	font-size: 24px;
+}
+
+.title {
+	font-family: Baskerville Old Face;
+}
+
+.card-content .category {
+	font-family: Lucida Calligraphy;
+	font-size: 16px;
+}
+
+body {
+	font-family: times and roman;
+}
+
+.dropdown-menu li a:hover {
+	background: transparent ! important;
+	color: black ! important;
+}
+
+span.multiselect-native-select {
+	position: relative
+}
+span.multiselect-native-select select {
+	border: 0!important;
+	clip: rect(0 0 0 0)!important;
+	height: 1px!important;
+	margin: -1px -1px -1px -3px!important;
+	overflow: hidden!important;
+	padding: 0!important;
+	position: absolute!important;
+	width: 1px!important;
+	left: 50%;
+	top: 30px
+}
+.multiselect-container {
+	position: absolute;
+	list-style-type: none;
+	margin: 0;
+	padding: 0
+}
+.multiselect-container .input-group {
+	margin: 5px
+}
+.multiselect-container>li {
+	padding: 0
+}
+.multiselect-container>li>a.multiselect-all label {
+	font-weight: 700
+}
+.multiselect-container>li.multiselect-group label {
+	margin: 0;
+	padding: 3px 20px 3px 20px;
+	height: 100%;
+	font-weight: 700
+}
+.multiselect-container>li.multiselect-group-clickable label {
+	cursor: pointer
+}
+.multiselect-container>li>a {
+	padding: 0
+}
+.multiselect-container>li>a>label {
+	margin: 0;
+	height: 100%;
+	cursor: pointer;
+	font-weight: 400;
+	padding: 3px 0 3px 30px
+}
+.multiselect-container>li>a>label.radio, .multiselect-container>li>a>label.checkbox {
+	margin: 0
+}
+.multiselect-container>li>a>label>input[type=checkbox] {
+	margin-bottom: 5px
+}
+.btn-group>.btn-group:nth-child(2)>.multiselect.btn {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px
+}
+.form-inline .multiselect-container label.checkbox, .form-inline .multiselect-container label.radio {
+	padding: 3px 20px 3px 40px
+}
+.form-inline .multiselect-container li a label.checkbox input[type=checkbox], .form-inline .multiselect-container li a label.radio input[type=radio] {
+	margin-left: -20px;
+	margin-right: 0
+}
+
+ .btn, .btn:hover, .btn:focus, .btn:active, .btn.active, .btn:active:focus, .btn:active:hover, .btn.active:focus, .btn.active:hover, .open > .btn.dropdown-toggle, .open > .btn.dropdown-toggle:focus, .open > .btn.dropdown-toggle:hover, .btn.btn-default, .btn.btn-default:hover, .btn.btn-default:focus, .btn.btn-default:active, .btn.btn-default.active, .btn.btn-default:active:focus, .btn.btn-default:active:hover, .btn.btn-default.active:focus, .btn.btn-default.active:hover, .open > .btn.btn-default.dropdown-toggle, .open > .btn.btn-default.dropdown-toggle:focus, .open > .btn.btn-default.dropdown-toggle:hover, .navbar .navbar-nav > li > a.btn, .navbar .navbar-nav > li > a.btn:hover, .navbar .navbar-nav > li > a.btn:focus, .navbar .navbar-nav > li > a.btn:active, .navbar .navbar-nav > li > a.btn.active, .navbar .navbar-nav > li > a.btn:active:focus, .navbar .navbar-nav > li > a.btn:active:hover, .navbar .navbar-nav > li > a.btn.active:focus, .navbar .navbar-nav > li > a.btn.active:hover, .open > .navbar .navbar-nav > li > a.btn.dropdown-toggle, .open > .navbar .navbar-nav > li > a.btn.dropdown-toggle:focus, .open > .navbar .navbar-nav > li > a.btn.dropdown-toggle:hover, .navbar .navbar-nav > li > a.btn.btn-default, .navbar .navbar-nav > li > a.btn.btn-default:hover, .navbar .navbar-nav > li > a.btn.btn-default:focus, .navbar .navbar-nav > li > a.btn.btn-default:active, .navbar .navbar-nav > li > a.btn.btn-default.active, .navbar .navbar-nav > li > a.btn.btn-default:active:focus, .navbar .navbar-nav > li > a.btn.btn-default:active:hover, .navbar .navbar-nav > li > a.btn.btn-default.active:focus, .navbar .navbar-nav > li > a.btn.btn-default.active:hover, .open > .navbar .navbar-nav > li > a.btn.btn-default.dropdown-toggle, .open > .navbar .navbar-nav > li > a.btn.btn-default.dropdown-toggle:focus, .open > .navbar .navbar-nav > li > a.btn.btn-default.dropdown-toggle:hover {
+    background-color: #999999;
+    color: #000;
+}
+
+
+select.form-control {
+    border: 1;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.form-control-feedback {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    z-index: 2;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    pointer-events: none;
+}
+
+.form-group .help-block {
+    margin-top: -30px;
+    font-size: 11px;
+}
+.modal-footer{
+	text-align:center !important;
+}
+.multiselect .dropdown-toggle .btn .btn-default{
+	width:100% !important;
+}
+</style>
+
+</head>
+
+<body>
+
+	<div class="wrapper">
+
+		<div class="sidebar" data-color="purple"
+			data-image="img/sidebar-1.jpg">
+
+			<div class="logo" style="text-align: center; display: block">
+				<a href="home"><img src="img/lg.png" class="img-responsive"
+					style="margin-left: auto; margin-right: auto" /></a>
+			</div>
+
+			<div class="sidebar-wrapper" style="background: aliceblue;">
+				<ul class="nav">
+					<li class=" tab" id="add-appointment"><a> <span
+							class="glyphicon glyphicon-paperclip"></span> New Appointment
+					</a></li>
+					<li class="active tab" id="dashboard"><a> <span
+							class="glyphicon glyphicon-th-large"></span> Dashboard
+					</a></li>
+					<li class="tab" id="user"
+						th:classappend="${userRole} ? 'hide' :  ''"><a><span
+							class="glyphicon glyphicon-user"></span> Employees </a></li>
+
+					<li class="tab" id="user-type"
+						th:classappend="${userRole} ? 'hide' :  ''"><a><span
+							class="glyphicon glyphicon-lock"></span> Roles </a></li>
+
+					<li class="tab" id="patient"><a><span
+							class="glyphicon glyphicon-user"></span> Patients </a></li>
+					<li class="tab" id="appointment"><a><span
+							class="glyphicon glyphicon-paperclip"></span> Appointments </a></li>
+					<li class="tab" id="doctor"
+						th:classappend="${userRole} ? 'hide' :  ''"><a><span
+							class="glyphicon glyphicon-user"></span> Doctors </a></li>
+					<li class="tab" id="service-type"
+						th:classappend="${userRole} ? 'hide' :  ''"><a><span
+							class="glyphicon glyphicon-list"></span> Services </a></li>
+
+					<li class="tab" id="commission"
+						th:classappend="${userRole} ? 'hide' :  ''"><a><span
+							class="glyphicon glyphicon-piggy-bank"></span> Commissions </a></li>
+
+					<li class="tab" id="report"
+						th:classappend="${userRole} ? 'hide' :  ''"><a><span
+							class="glyphicon glyphicon-list-alt"></span> Reports </a></li>
+
+					<li class="tab" id="billing"><a><span
+							class="glyphicon glyphicon-file"></span> Billings </a></li>
+					<li class="tab" id="chart"
+						th:classappend="${userRole} ? 'hide' :  ''"><a><span
+							class="glyphicon glyphicon-file"></span> Statistics </a></li>
+
+
+				</ul>
+			</div>
+		</div>
+
+		<div class="main-panel">
+			<nav class="navbar navbar-transparent navbar-absolute" style="background: aliceblue;">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+
+					</div>
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<!-- <li><a href="#pablo" class="dropdown-toggle"
+								data-toggle="dropdown"> <i class="material-icons">dashboard</i>
+									<p class="hidden-lg hidden-md">Dashboard</p>
+							</a></li> -->
+							<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown"> <i class="material-icons">notifications</i>
+									<span class="notification">2</span>
+									<p class="hidden-lg hidden-md">Notifications</p>
+							</a>
+								<ul class="dropdown-menu">
+									<li><a href="#">5 New Appointments</a></li>
+									<li><a href="#">1 new service added</a></li>
+
+								</ul></li> -->
+							<li
+								style="background: #82D4D4; color: white; border-radius: 20%"><a
+								href="#pablo" class="dropdown-toggle" data-toggle="dropdown"
+								href="#" style="padding: 20%;"> <img src="img/usr.png" style="width:20px"/>
+							</a>
+								<ul class="dropdown-menu">
+									<li style="padding:4%;"><a href="" th:classappend="${userRole} ? 'hide' :  ''">Hello,
+											Super Admin <span th:text="${userName}"></span>
+									</a></li>
+									<li style="padding:4%;"><a href="" th:classappend="${userRole} ? '' :  'hide'">Hello,
+											Admin <span th:text="${userName}"></span>
+									</a></li>
+									<hr />
+									<li style="text-align:center;padding: 4%;"><a href="">Setting</span>
+									</a></li>
+									<hr />
+
+									<li style="text-align: center; padding: 15px;">
+
+										<form th:action="@{/logout}" method="get">
+											<button class="btn btn-md btn-danger btn-block"
+												name="registration" type="Submit">
+												<span class="glyphicon glyphicon-log-out"></span>Logout
+											</button>
+										</form>
+									</li>
+								</ul></li>
+						</ul>
+
+					</div>
+				</div>
+			</nav>
+
+			<div class="content"></div>
+
+			<footer class="footer" style="margin-top: 20px;padding:0px">
+				<div class="container-fluid" style="background: black;color: white;">
+					<!-- <nav class="pull-left">
+						<ul>
+							<li><a href="dashboard.html"> Home </a></li>
+
+						</ul>
+					</nav> -->
+					<p class="copyright pull-right" style="padding: 7px 0;">
+						&copy;
+						<script>
+							document.write(new Date().getFullYear());
+						</script>
+						<a href="http://www.condigence.com/">Developed, maintained and
+							Powered by IbanSoft</a>
+					</p>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+
+	<!-- Add User Modal -->
+		<div class="modal fade" id="addUser" role="dialog" 	style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+			<form  name="addUser" id="addUserform" >
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button
+						style="background-color: white; padding-left: 1%; padding-right: 1%"
+						type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">Add New User</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+				
+					<div class="row">
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Fiest Name</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname" name="add_user_name" id="add_user_name" type="text" placeholder="First Name">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Last Name</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname" name="add_user_last_name" id="add_user_last_name" type="text" placeholder="Last Name">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Email</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname" name="add_user_email" id="add_user_email" type="text" placeholder="Email">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Password</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname" name="add_user_password" id="add_user_password" type="password" placeholder="Password">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary btn-sm  add-user-btn"	>Add</button>
+					<button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancel</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Add Permission Modal -->
+		<div class="modal fade" id="addPermission" role="dialog" 	style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+			<form  name="addUser" id="addUserform" >
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button
+						style="background-color: white; padding-left: 1%; padding-right: 1%"
+						type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">Add Permission</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+				
+					<div class="row">
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Role</label>
+							<div class="col-md-9 col-sm-6">
+								<select class="form-control">
+									<option value="">Choose Role</option>
+									<option value="">SUPERADMIN </option>
+									<option value="">ADMIN</option>
+									<option value="">MANAGER</option>
+									<option value="">LAB INCHARGE</option>
+								</select>
+							</div>
+						</div>
+						
+						
+						
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary btn-sm  add-permission-btn"	>Add</button>
+					<button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancel</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Edit User Modal -->
+	<div class="modal fade" id="editUser" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content" style="padding: 13px 10px;">
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button style="background-color: white;" type="button"
+						class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">User
+						Update</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+
+					<div class="row">
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Id</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_user_id" id="edit_user_id"
+									value="" type="text"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Name</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_user_name" id="edit_user_name"
+									value="" type="text"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Last Name</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_user_last_name"
+									id="edit_user_last_name" value="" type="text"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Email</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_user_email" id="edit_user_email"
+									value="" type="text"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Active</label>
+							<div class="col-md-9 col-sm-6">
+								<select class="form-control edit_user_active"
+									id="edit_user_active">
+									<option value="true">True</option>
+									<option value="false">False</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Role</label>
+							<div class="col-md-9 col-sm-6">							
+							<select class="form-control edit_user_role"
+									id="edit_user_role">
+									<option value="0">SELECT</option>
+									<option value="2">ADMIN</option>
+									<option value="3">USER</option>
+								</select>							
+								
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+						class="btn btn-primary btn-sm save-updated-user-btn" onclick="updateUser(this.id)"
+						data-dismiss="modal">Update</button>
+						 <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+
+
+	<!-- Add Patients Modal -->
+	<div class="modal fade" id="addPatient" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content" style="padding: 13px 10px;">
+				<div class="modal-header" style="background-color: #2a6294;">
+					<!-- <button style="background-color: white;" type="button"
+						class="close" data-dismiss="modal">&times;</button> -->
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">New
+						Patients</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+
+					<div class="row">
+
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Name </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname" type="text" placeholder="Name">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Referred
+								Doctor</label>
+							<div class="col-md-9 col-sm-6">
+								<select class="form-control" id="add-appointment-refdoc">
+									<option value=""></option>
+
+									<option value="2">Dr. Vishal</option>
+									<option value="3">Dr. Sahil</option>
+									<option value="4">Dr. Kripa</option>
+								</select>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Mobile </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact"
+									id="add-appointment-address" type="text" placeholder="Mobile Number">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Gender </label>
+							<div class="col-md-9 col-sm-6">
+								<select class="form-control" id="add-appointment-gender">
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Age </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact" type="text" placeholder="Age">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Address</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control serviceType"
+									id="add-appointment-serviceType" type="text" placeholder="Address">
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+						class="btn btn-primary btn-sm add-patient-btn"
+						data-dismiss="modal">Add</button>
+					<button type="button" class="btn btn-info btn-sm"
+						data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<!-- Edit Patients Modal -->
+	<div class="modal fade" id="editPatient" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content" style="padding: 13px 10px;">
+				<div class="modal-header" style="background-color: #2a6294;">
+					 <button style="background-color: white;" type="button"
+						class="close" data-dismiss="modal">&times;</button> 
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">Update
+						Patients</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+
+					<div class="row">
+
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Name </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Referred
+								Doctor</label>
+							<div class="col-md-9 col-sm-6">
+								<select class="form-control" id="add-appointment-refdoc">
+									<option value=""></option>
+
+									<option value="2">Dr. Vishal</option>
+									<option value="3">Dr. Sahil</option>
+									<option value="4">Dr. Kripa</option>
+								</select>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Mobile </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact"
+									id="add-appointment-address" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Gender </label>
+							<div class="col-md-9 col-sm-6">
+
+								<select class="form-control" id="add-appointment-gender">
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Age </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Address</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control serviceType"
+									id="add-appointment-serviceType" type="text">
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button"
+							class="btn btn-primary btn-sm edit-patient-btn"
+							data-dismiss="modal">Update</button>
+						<button type="button" class="btn btn-info btn-sm"
+							data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+	<!-- Add appointment Modal -->
+	<div class="modal fade" id="addAppo" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content"
+				style="padding: 13px 10px; height: 600px; overflow: auto">
+				<div class="modal-header" style="background-color: #2a6294;">
+					 <button style="background-color: white;" type="button"
+						class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">New
+						Appointment</h4>
+				</div>
+				<div class="modal-body" style="text-align:;">
+
+					<div class="row">
+					
+					
+					
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">First Name </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname add_appointment_firstName"
+									val="" type="text" placeholder="First Name">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Last Name
+							</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname add_appointment_lastName"
+									val="" type="text" placeholder="Last Name">
+							</div>
+						</div>
+
+						<!-- div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Services</label>
+							<div class="col-md-9 col-sm-6">
+								<select class="form-control add_appointment_serviceTypeId"  style="border: 1px solid #eee;
+    cursor: pointer;"
+									val="">
+									<option value="0">All Test</option>
+									<option value="1">Blood Test</option>
+									<option value="2">X-ray</option>
+									<option value="3">ECG</option>
+								</select>
+							</div>
+						</div-->
+						
+						<div class="form-group">
+    <label class="col-md-3 col-sm-12 control-label" for="rolename">Services</label>
+    <div class="col-md-9 col-sm-6">
+        <select id="dates-field2"  class="add_appointment_serviceTypeId multiselect-ui form-control" multiple="multiple">
+            <option value="0">All Test</option>
+            <option value="1">Blood Test</option>
+            <option value="2">X-ray</option>
+            <option value="3">ECG</option>
+        </select>
+    </div>
+</div>					
+						
+						
+						
+							<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Age</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_appointment_age" val=""
+									type="text" placeholder="Age">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Contact
+								No </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact" val="" type="text" placeholder="Mobile Number">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Address</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_appointment_address" val=""
+									type="text" placeholder="Address">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Gender</label>
+							<div class="col-md-9 col-sm-6">
+
+								<select class="form-control add_appointment_gender" val="">
+									<option value="">Choose Gender</option>
+
+									<option value="M">M</option>
+									<option value="F">F</option>
+									<option value="O">O</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Email</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_appointment_email" val=""
+									type="text" placeholder="Email">
+							</div>
+						</div>
+						
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Date </label>
+							<div class="col-md-9 col-sm-6">
+
+								<input type='date' placeholder="Select date"
+									class="form-control add_appointment_dateTime" val=""
+									id='datetimepicker2' />
+							</div>
+						</div>
+					
+
+					
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Slot</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_appointment_slot" val=""
+									type="text" placeholder="Enter Time Slot">
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Ref.
+								Doctor</label>
+							<div class="col-md-9 col-sm-6" >
+
+								<select class="form-control add_appointment_referredByDoctorId"  style="border: 1px solid #eee;
+    cursor: pointer;" val="">
+									<option value="0">None</option>
+									<option value="1">Dr. Vishal</option>
+									<option value="2">Dr. Sahil</option>
+									<option value="3">Dr. Kripa</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+						class="btn btn-primary btn-sm add-appointment-btn"
+						data-dismiss="modal">Add</button>
+					<button type="button" class="btn btn-info btn-sm"
+						data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Edit Appointment Modal -->
+	<div class="modal fade" id="appoEditModal" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content"
+				style="padding: 13px 10px; height: 600px; overflow: auto">
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button style="background-color: white;" type="button"
+						class="close" data-dismiss="modal">&times;</button> 
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">Appointment
+						Update</h4>
+				</div>
+				<div class="modal-body" style="text-align: ;">
+
+					<div class="row">
+
+						<!-- <div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Services</label>
+							<div class="col-md-9 col-sm-6">
+								<select class="form-control edit_appointment_serviceTypeId"
+									val="">
+									<option value="1">Blood Test</option>
+									<option value="2">X-ray</option>
+									<option value="3">ECG</option>
+								</select>
+							</div>
+						</div> -->
+								<div class="form-group">
+    <label class="col-md-3 col-sm-12 control-label" for="rolename">Services</label>
+    <div class="col-md-9 col-sm-6">
+        <select id="dates-field2"  class="add_appointment_serviceTypeId multiselect-ui form-control" multiple="multiple">
+            <option value="0">All Test</option>
+            <option value="1">Blood Test</option>
+            <option value="2">X-ray</option>
+            <option value="3">ECG</option>
+        </select>
+    </div>
+</div>		
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Date </label>
+							<div class="col-md-9 col-sm-6">
+
+								<input type='date' placeholder="Select date"
+									class="form-control edit_appointment_dateTime" val=""
+									id='datetimepicker2' />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Name </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname edit_appointment_firstName"
+									val="" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Last Name
+							</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname edit_appointment_lastName"
+									val="" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Age</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_appointment_age" val=""
+									type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Contact
+								No </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact" val="" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Address</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_appointment_address" val=""
+									type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Gender</label>
+							<div class="col-md-9 col-sm-6">
+
+								<select class="form-control edit_appointment_gender" val="">
+									<option value=""></option>
+
+									<option value="M">M</option>
+									<option value="F">F</option>
+									<option value="O">O</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Email</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_appointment_email" val=""
+									type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Slot</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_appointment_slot" val=""
+									type="text">
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Ref.
+								Doctor</label>
+							<div class="col-md-9 col-sm-6">
+
+								<select class="form-control edit_appointment_referredByDoctorId"
+									val="">
+
+									<option value="1">Dr. Vishal</option>
+									<option value="2">Dr. Sahil</option>
+									<option value="3">Dr. Kripa</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+						class="btn btn-primary btn-sm save-update-btn"
+						data-dismiss="modal">Update</button>
+					<button type="button" class="btn btn-info btn-sm"
+						data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+
+
+
+	<!-- Add Bill Modal -->
+	<div class="modal fade" id="addBill" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content" style="padding: 13px 10px;">
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button style="background-color: white;" type="button"
+						class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">Add
+						Bills</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+
+					<div class="row">
+
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Billing
+								No </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname" type="text" placeholder="Billing Number">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Date</label>
+							<div class="col-md-9 col-sm-6">
+								<input type='text' placeholder="Select date"
+									class="form-control" id='datetimepicker3' />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Time</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control page" type="text" placeholder="Eg: 10:55PM">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Name </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact"
+									id="add-appointment-address" type="text" placeholder="Name">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Particulars
+							</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact" id="add-appointment-gender"
+									type="text" placeholder="Particulars">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Rate </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact" type="text" placeholder="Rate">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Qty</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control serviceType"
+									id="add-appointment-serviceType" type="text" placeholder="Quantity">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Amount</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control serviceType"
+									id="add-appointment-serviceType" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Total</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control serviceType"
+									id="add-appointment-serviceType" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Payble</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control serviceType"
+									id="add-appointment-serviceType" type="text">
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+						class="btn btn-primary btn-sm  add-invoice-btn"
+						data-dismiss="modal">Add</button>
+					<button type="button" class="btn btn-info btn-sm"
+						data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<!-- Edit Bill Modal -->
+	<div class="modal fade" id="editBill" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content" style="padding: 13px 10px;">
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button style="background-color: white;" type="button"
+						class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">Update
+						Bills</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+
+					<div class="row">
+
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Billing
+								No </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pname" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Date</label>
+							<div class="col-md-9 col-sm-6">
+								<input type='text' class="form-control" id='datetimepicker4' />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Time</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control page" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Name </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact"
+									id="add-appointment-address" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Particulars
+							</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact" id="add-appointment-gender"
+									type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Rate </label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control pcontact" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Qty</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control serviceType"
+									id="add-appointment-serviceType" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Amount</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control serviceType"
+									id="add-appointment-serviceType" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Total</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control serviceType"
+									id="add-appointment-serviceType" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Payble</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control serviceType"
+									id="add-appointment-serviceType" type="text">
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+						class="btn btn-primary btn-sm edit-appointment-btn"
+						data-dismiss="modal">Update</button>
+					<button type="button" class="btn btn-info btn-sm"
+						data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- print Modal -->
+	<div class="modal fade" id="appoPrintBillingModal" role="dialog"
+		style="width: initial; margin: auto;">
+		<div class="modal-dialog"
+			style="width: 80%; margin-top: 0px !important">
+
+			<!-- Modal content-->
+			<div class="modal-content" style="padding: 13px 10px;">
+
+				<div class="modal-body" style="text-align: center;">
+					<div class="row">
+						<div class="col-md-6">
+							<img src="img/logo.png" />
+						</div>
+						<div class="col-md-6">
+							<p>27/97-C6,C7, FCC Building, Near Fedeeral bank Tower</p>
+
+							<p>Mavoor Road, Calicut - 16</p>
+							<p>Phone : 04952740606</p>
+							<p>E-mail : home@medicarediagnostics.in</p>
+							<p>Website : www.medicarediagnostics.in</p>
+
+						</div>
+					</div>
+					<div class="row"
+						style="border-bottom: 1px dotted; border-top: 1px dotted;">
+						<div class="col-md-4">
+							<p>BILL</p>
+						</div>
+						<div class="col-md-4">
+							<p>CASH BILL</p>
+						</div>
+						<div class="col-md-4">
+							<p>No:01234</p>
+						</div>
+					</div>
+					<div class="row"
+						style="border-bottom: 1px dotted; background: silver">
+						<div class="col-md-4">
+							<p>Patient: Chitranjan Sharma</p>
+						</div>
+						<div class="col-md-4">
+							<p>Bill Date:20/05/2017</p>
+						</div>
+						<div class="col-md-4">
+							<p>Time:02:48 PM</p>
+						</div>
+					</div>
+					<div class="row" style="border-bottom: 1px solid;">
+						<div class="col-md-2">
+							<p>S.No</p>
+						</div>
+						<div class="col-md-4">
+							<p>Particulars</p>
+						</div>
+						<div class="col-md-2">
+							<p>Rate</p>
+						</div>
+						<div class="col-md-2">
+							<p>Qty</p>
+						</div>
+						<div class="col-md-2">
+							<p>Amount</p>
+						</div>
+
+					</div>
+					<div class="row" style="border-bottom: 1px solid;">
+						<div class="col-md-2">
+							<p>1</p>
+						</div>
+						<div class="col-md-4">
+							<p>USG Abdomen</p>
+						</div>
+						<div class="col-md-2">
+							<p>1350</p>
+						</div>
+						<div class="col-md-2">
+							<p>1</p>
+						</div>
+						<div class="col-md-2">
+							<p>1350</p>
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col-md-6"></div>
+						<div class="col-md-4" style="border-bottom: 1px solid;">
+							<p style="text-align: left">Total:</p>
+						</div>
+
+						<div class="col-md-2" style="border-bottom: 1px solid;">
+							<p>1350</p>
+						</div>
+					</div>
+					<div class="row" style="border-bottom: 1px solid;">
+						<div class="col-md-6"></div>
+						<div class="col-md-4">
+							<p style="text-align: left">Net Amount(Payable):</p>
+						</div>
+
+						<div class="col-md-2">
+							<p>1350</p>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="modal-footer" style="text-align: center">
+					<button type="button" class="btn btn-primary btn-sm"
+						data-dismiss="modal">Print</button>
+					<button type="button" class="btn btn-info btn-sm"
+						data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+<!-- print Modal -->
+	<div class="modal fade" id="printReport" role="dialog"
+		style="width: initial; margin: auto;">
+		<div class="modal-dialog"
+			style="width: 80%; margin-top: 0px !important">
+
+			<!-- Modal content-->
+			<div class="modal-content" style="padding: 13px 10px;">
+
+				<div class="modal-body" style="text-align: center;">
+					<div class="row">
+						<div class="col-md-6">
+							<img src="img/logo.png" />
+						</div>
+						<div class="col-md-6">
+							<p>27/97-C6,C7, FCC Building, Near Fedeeral bank Tower</p>
+
+							<p>Mavoor Road, Calicut - 16</p>
+							<p>Phone : 04952740606</p>
+							<p>E-mail : home@medicarediagnostics.in</p>
+							<p>Website : www.medicarediagnostics.in</p>
+
+						</div>
+					</div>
+					
+					<div class="row"
+						style="border-bottom: 1px dotted; background: silver;margin-left:0px;margin-right:0px">
+						
+						<div class="col-md-6">
+							<p>Bill Date:20/05/2017</p>
+						</div>
+						<div class="col-md-6">
+							<p>Time:02:48 PM</p>
+						</div>
+					</div>
+					
+					<div class="table-responsive">
+							<table class="table " style="border: 1px solid silver;">
+								<thead style="background-color: #797A78; color: white">
+									<tr>
+										<th>S.No</th>
+										<th>Service</th>
+										<th>Price</th>
+										<th>No Of Patients</th>
+										<th>Amount</th>
+										<th>Referred Doctor</th>
+										<th>Dr. Commission</th>
+										<th>Total Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="reportTd">1</td>
+										<td class="reportTd">KUB</td>
+										<td class="reportTd">500</td>
+										<td class="reportTd">5</td>
+										<td class="reportTd">2500</td>
+										<td class="reportTd">5</td>
+										<td class="reportTd">1250</td>
+										<td class="reportTd">1250</td>
+									</tr>
+									<tr>
+										<td class="reportTd">2</td>
+										<td class="reportTd">ANOMALY</td>
+										<td class="reportTd">1200</td>
+										<td class="reportTd">10</td>
+										<td class="reportTd">12000</td>
+										<td class="reportTd">8</td>
+										<td class="reportTd">4800</td>
+										<td class="reportTd">7200</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					
+					
+
+				</div>
+				<div class="modal-footer" style="text-align: center">
+					<button type="button" class="btn btn-primary btn-sm"
+						data-dismiss="modal">Print</button>
+					<button type="button" class="btn btn-info btn-sm"
+						data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<!-- Doctor view Modal -->
+	<div class="modal fade" id="viewModal" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content" style="padding: 13px 10px;">
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">Doctor
+						Profile</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+					<div class="row">
+						<div class="col-md-6 col-sm-12">
+							<img src="img/faces/marc.jpg" class="img-responsive"
+								style="margin-left: auto; margin-right: auto">
+						</div>
+						<div class="col-md-6 col-sm-12">
+							<div class="row">
+								<h4 style="font-weight: bold">Chitranjan Sharma</h4>
+								<h5>Ortho</h5>
+							</div>
+							<hr />
+							<div class="row">
+								<a href="#" class="fa fa-facebook"></a> <a href="#"
+									class="fa fa-twitter"></a> <a href="#" class="fa fa-google"></a>
+								<a href="#" class="fa fa-linkedin"></a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+
+
+	<!-- Report Print -->
+	<div class="modal fade" id="" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog" style="width: 70%">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header"
+					style="background-color: #84B54D; color: white; text-align: center; padding: 0px">
+					<h3 style="font-weight: bold">Daily Reports</h3>
+					<!-- <h4 class="modal-title"
+					style="color: white; padding-bottom: 2%; text-align: center">Daily
+					Reports</h4> -->
+				</div>
+				<div class="modal-body" style="text-align: center;">
+
+					<div class="row " style="padding: 2%;">
+						<div class="row" style="margin-bottom: 3%">
+							<p
+								style="float: right; margin-right: 1%; font-weight: bold; color: #2A6294">Date:
+								11/June/17</p>
+						</div>
+						<div class="table-responsive">
+							<table class="table " style="border: 1px solid #84B54D;">
+								<thead style="background-color: #84B54D; color: white">
+									<tr>
+										<th>S.No</th>
+										<th>Service</th>
+										<th>Price</th>
+										<th>No Of Patients</th>
+										<th>Amount</th>
+										<th>Referred Doctor</th>
+										<th>Dr. Commission</th>
+										<th>Total Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="reportTd">1</td>
+										<td class="reportTd">KUB</td>
+										<td class="reportTd">500</td>
+										<td class="reportTd">5</td>
+										<td class="reportTd">2500</td>
+										<td class="reportTd">5</td>
+										<td class="reportTd">1250</td>
+										<td class="reportTd">1250</td>
+									</tr>
+									<tr>
+										<td class="reportTd">2</td>
+										<td class="reportTd">ANOMALY</td>
+										<td class="reportTd">1200</td>
+										<td class="reportTd">10</td>
+										<td class="reportTd">12000</td>
+										<td class="reportTd">8</td>
+										<td class="reportTd">4800</td>
+										<td class="reportTd">7200</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+						<div class="row">
+							<p style="float: right; margin-right: 2%; font-weight: bold">Grand
+								Total: 8450.00</p>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-primary btn-sm"
+						data-dismiss="modal" style="float: right" value="Print"> <input
+						type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+						style="float: right" value="Cancel">
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- Add Service Type Model Starts Here -->
+
+	<!-- Add Modal -->
+<div class="modal fade" id="addService" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+			<form name="addService" id="addServiceform">
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button
+						style="background-color: #fff; padding-left: 1%; padding-right: 1%"
+						type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">Add New
+						Service</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+					<div class="row">
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Service
+								Type</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control" type="text" name="add_new_serviceType" id="add_new_serviceType" placeholder="Service Type">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Price</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control" type="text" name="add_new_serviceType_price" id="add_new_serviceType_price" placeholder="Service Price">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary btn-sm add_new_serviceType_btn" >Add</button>
+					<button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancel</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<!-- Add Service Type Model Ends Here -->
+	<!-- Edit Service Type Model Starts Here -->
+
+	<!--Edit Modal -->
+	<div class="modal fade" id="editServiceType" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content" style="padding: 13px 10px;">
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button
+						style="background-color: #fff; padding-left: 1%; padding-right: 1%"
+						type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">Update
+						Service</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+					<div class="row">
+						<input class="form-control edit-serviceType-id hide" type="text"
+							value="">
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Services</label>
+							<div class="col-md-9 col-sm-6 st-select-container"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Price</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit-serviceType-price" type="text"
+									value="">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+						class="btn btn-primary btn-sm servicetype-update-btn"
+						data-dismiss="modal">Update</button>
+						<button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Edit Service Type Model Ends Here -->
+
+	<!--Edit doctor Modal -->
+	<div class="modal fade" id="editDoctor" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content" style="padding: 13px 10px;">
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button
+						style="background-color: #fff; padding-left: 1%; padding-right: 1%"
+						type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">Update
+						Doctor</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+
+					<div class="row">
+						<input class="form-control edit_doctor_id hide" type="text"
+							value="">
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Name</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_doctor_name" type="text"
+									value="">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Mobile</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_doctor_contactNo" type="text"
+									value="">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Email</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_doctor_email" type="text"
+									value="">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Hospital</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_doctor_hospitalName" type="text"
+									value="">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Qualification</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_doctor_qualification"
+									type="text" value="">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Speciality</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_doctor_speciality" type="text"
+									value="">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Address</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_doctor_address" type="text"
+									value="">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">commission</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control edit_doctor_commission" type="text"
+									value="">
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+						class="btn btn-primary btn-sm edit_doctor_btn"
+						data-dismiss="modal">Update</button>
+						<button type="button" class="btn btn-info btn-sm"
+						data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Add doctor Modal -->
+	<div class="modal fade" id="addDoctor" role="dialog"
+		style="width: initial; margin: auto; overflow-x: hidden; overflow-y: hidden;">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #2a6294;">
+					<button
+						style="background-color: #d6cdcd; padding-left: 1%; padding-right: 1%"
+						type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"
+						style="color: white; padding-bottom: 2%; text-align: center">New
+						Doctor</h4>
+				</div>
+				<div class="modal-body" style="text-align: center;">
+
+					<div class="row">
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Name</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_doctor_name" type="type" value="" placeholder="Doctor Name">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Mobile</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_doctor_contactNo" type="text"
+									value="" placeholder="Mobile Number">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Email</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_doctor_email" type="text"
+									value="" placeholder="Email Id">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Hospital</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_doctor_hospitalName" type="text"
+									value="" placeholder="Hospital Name">
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Qualification</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_doctor_qualification" type="text"
+									value="" placeholder="Doctor Qualification">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Speciality</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_doctor_speciality" type="text"
+									value="" placeholder="Speciality">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">Address</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_doctor_address" type="text"
+									value="" placeholder="Address">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-sm-12 control-label">commission</label>
+							<div class="col-md-9 col-sm-6">
+								<input class="form-control add_doctor_commission" type="text"
+									value="" placeholder="Commission">
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary btn-sm add-doctor-btn"
+						data-dismiss="modal">Add</button>
+						<button type="button" class="btn btn-info btn-sm"
+						data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+</body>
+<!--   Core JS Files   -->
+<script src="js/jquery-3.1.0.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+
+
+<script src="js/formValidation.min.js" type="text/javascript"></script>
+<script src="js/framework/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/jquery.form.min.js" type="text/javascript"></script> 
+
+
+
+
+<script src="js/jquery.datetimepicker.min.js"></script>
+<script src="js/jquery.datetimepicker.full.min.js"></script>
+<!--  Google Maps Plugin    -->
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js"></script>
+<!-- Material Dashboard javascript methods -->
+<!-- <script src="js/material-dashboard.js"></script> -->
+<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+<script src="js/demo.js"></script>
+<script src="js/medicare.js" type="text/javascript"></script>
+<script src="js/validation.js" type="text/javascript"></script>
+
+
+<script src="js/moment.js" type="text/javascript"></script>
+<script src="js/daterangepicker.js" type="text/javascript"></script>
+<script src="js/bootstrap-multiselect.js" type="text/javascript"></script>
+
+
+<script th:inline="javascript">
+        /*<![CDATA[*/
+        
+
+    var port = [[${port}]];
+    var host = [[${host}]];
+	var baseUrl = "http://"+host+":"+port+"/medicare";	
+	
+	//alert("baseUrl : "+baseUrl);
+	var dashboardurl = baseUrl+"/dashboard";	
+	//alert("dashboardurl : "+dashboardurl);
+	
+	var container = "content";
+	callAjax(dashboardurl, container, "GET");	
+	$(".nav > .tab").click(function() {
+		$(this).addClass("active").siblings().removeClass("active");
+		var id = $(this).attr('id');
+		var container = "content";
+		$("." + container).siblings().removeClass("active");
+		$("." + container).addClass("active");
+		var tabUrl = baseUrl + "/" + id;
+		
+		//alert(tabUrl);
+		callAjax(tabUrl, container, "GET");
+	});
+
+	$('.togglefaq').click(
+			function(e) {
+				e.preventDefault();
+				var notthis = $('.active').not(this);
+				notthis.find('.icon-minus').addClass('icon-plus').removeClass(
+						'icon-minus');
+				notthis.toggleClass('active').next('.faqanswer').slideToggle(
+						300);
+				$(this).toggleClass('active').next().slideToggle("fast");
+				$(this).children('i').toggleClass('icon-plus icon-minus');
+			});
+	   /*]]>*/
+    </script>
+<script type="text/javascript">
+	$(function() {
+		$('#datetimepicker2').datetimepicker();
+	});
+	
+	$(function() {
+	    $('.multiselect-ui').multiselect({
+	        includeSelectAllOption: true
+	    });
+	});
+</script>
+</html>

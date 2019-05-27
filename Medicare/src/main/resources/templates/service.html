@@ -1,0 +1,211 @@
+<div class="page-content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card ">
+					<div class="card-header" data-background-color="purple">
+						<h4 class="title">Our Services List</h4>
+						<!-- <p class="category">Choose NGO</p> -->
+						<button class="category btn btn-default btn-sm addBtnBg"
+							data-toggle="modal" data-target="#addService">Add</button>
+					</div>
+					<!-- <div style="padding:2%"><input class="form-control"type="text" placeholder="Search...." style="width:100%"></div> -->
+					<div class="card-content table-responsive">
+						<table class="table table-hover">
+							<thead class="text-primary headerdata">
+							</thead>
+							<tbody class="rowdata">
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+$( document ).ready(function() {
+  
+
+
+	var container = "page-content";
+	//alert("load all");
+	var serviceurl = baseUrl+"/servicetype/all";
+	//alert(serviceurl);
+	var jsonData = "";
+	getJSON(serviceurl);
+
+	 // console.log( "ready!" );
+});
+	
+	function getJSON(serviceurl) {
+		$.ajax({
+			url : serviceurl,
+			type : "GET",
+			crossDomain : true,
+			timeout : 50000,
+			success : function(response) {
+				jsonData = response;
+				populateData(response);
+				initClickEvent();
+			},
+			error : function(xhr, status, error) {
+			}
+		});
+
+	}
+
+	function initClickEvent() {
+
+		$(".delbtn").click(function() {
+			//alert("deleting...");
+			var idStr = $(this).attr("id");
+			var id = idStr.split('_')[1];
+			url = baseUrl + "/servicetype/" + id;
+			//alert(url);
+			$.ajax({
+				url : url,
+				type : "DELETE",
+				crossDomain : true,
+				timeout : 50000,
+				success : function(response) {
+					location.reload(true);
+				},
+				error : function(xhr, status, error) {
+				}
+			});
+		});
+
+		$(".add-new-serviceType-btn").click(function() {
+			
+			var name = $("#add-new-serviceType").val();
+			var price = $("#add-new-serviceType-price").val();
+
+			var jsondata = {};
+			jsondata["name"] = name;
+			jsondata["price"] = price;
+
+			var urlPerfix = baseUrl;
+			url = urlPerfix + "/servicetype/add";
+
+			callAjaxPostJSON(url, "POST", "", jsondata);
+
+			clearForm();
+		});
+
+		$(".editbtn")
+				.click(
+						function() {
+							var id = $(this).attr("id").split('_')[1];
+							var name = $("#servicetype_" + id).text();
+							var price = $("#price_" + id).text();
+							var optStr = "";
+							var selStr = '<select class="form-control" id="edit-serviceType">';
+
+							for (i = 0; i < jsonData.length; i++) {
+								var opt = jsonData[i].name;
+								if (opt == name) {
+									optStr = optStr
+											+ '<option selected value="'+opt+'" class="ST_1" >'
+											+ opt + '</option>';
+								} else {
+									optStr = optStr
+											+ '<option value="'+opt+'" class="ST_1" >'
+											+ opt + '</option>';
+								}
+
+							}
+							selStr = selStr + optStr + "</select>";
+							$(".st-select-container").html(selStr);
+							$(".edit-serviceType-id").val(id);
+							$(".edit-serviceType-price").val(price);
+
+						});
+
+		$(".servicetype-update-btn").click(function() {
+
+			var id = $(".edit-serviceType-id").val();
+
+			var name = $("#edit-serviceType option:selected").text();
+			var price = $(".edit-serviceType-price").val();
+
+			var jsondata = {};
+			jsondata["id"] = id;
+			jsondata["name"] = name;
+			jsondata["price"] = price;
+
+			var urlPerfix = baseUrl;
+			url = urlPerfix + "/servicetype/" + id;
+			callAjaxPostJSON(url, "PUT", "", jsondata);
+			clearForm();
+		});
+	}
+
+	function clearForm() {
+		$(".form-control").val("");
+	}
+
+	function callAjaxPostJSON(urlMapping, callType, container, data) {
+
+		$.ajax({
+			type : callType,
+			contentType : "application/json",
+			url : urlMapping,
+			data : JSON.stringify(data),
+			crossDomain : true,
+			dataType : 'json',
+			timeout : 100000,
+			success : function(response) {
+				console.log("SUCCESS: ", data);
+				if (!data.error)
+					location.reload(true);
+			},
+			error : function(xhr, status, error) {
+				console.log("ERROR: ", error);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+
+	}
+
+	function populateData(response) {
+		var headerdataStr = "";
+		headerdataStr = headerdataStr + "<th>Service Number</th>"
+				+ "<th>Service Type</th>" + "<th>Price</th>"
+				+ "<th>Action</th>";
+
+		$('.headerdata').html(headerdataStr);
+		//alert(response.length);
+		var rowDataStr = "";
+		for (i = 0; i < response.length; i++) {
+		
+			rowDataStr = rowDataStr
+					+ "<tr id='row_" + response[i].id + "'>"
+					+ "<td id='id_" + response[i].id + "'>"
+					+ response[i].id
+					+ "</td>"
+					+ "<td id='servicetype_" + response[i].id + "'>"
+					+ response[i].name
+					+ "</td>"
+					+ "<td id='price_" + response[i].id + "'>"
+					+ response[i].price
+					+ "</td>"
+
+					+ "<td>"
+
+					+ "<button id='editbtn_" + response[i].id + "' class='btn-primary editbtn' data-target='#editServiceType'" + "data-toggle='modal' title='Edit Appointment'>"
+					+ "<span class='glyphicon glyphicon-pencil'></span>"
+					+ "</button>"
+
+					+ "<button id='delbtn_" + response[i].id + "' class='btn-primary delbtn' title='Delete Service Type'>"
+					+ "<span class='glyphicon glyphicon-remove'></span>" + "</button></td>"
+
+					+ "</tr>";
+		}
+		$('.rowdata').html(rowDataStr);
+
+	}
+</script>

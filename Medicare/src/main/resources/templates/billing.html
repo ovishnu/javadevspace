@@ -1,0 +1,76 @@
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card ">
+				<div class="card-header" data-background-color="purple">
+					<h4 class="title">Billing</h4>
+					<!-- <p class="category">Complete your profile</p> -->
+					<!-- <button class="category btn btn-default btn-sm "
+						data-toggle="modal" data-target="#addBill">Add</button> -->
+				</div>
+
+				<div class="card-content table-responsive">
+					<table class="table table-hover">
+						<thead class="text-primary">
+							<th>S.No</th>
+							<th>Billing No</th>
+							<th>Date</th>
+							<th>Time</th>
+							<th>Particulars</th>
+							<th>Rate</th>
+							<th>Qty</th>
+							<th>Amount</th>
+							<th>Total</th>
+							<th>Payble</th>
+							<th>Action</th>
+						</thead>
+						<tbody>
+							<tr>
+
+								<td>1</td>
+								<!-- <td class="text-danger">Ortho</td> -->
+								<td>01234</td>
+								<td>10-06-17</td>
+								<td>2:48 PM</td>
+								<td>USG Abdomen</td>
+								<td>1350</td>
+								<td>1</td>
+								<td>1350</td>
+								<td>1350</td>
+								<td>1350</td>
+								<td><button class="btn-primary"
+										style="border: transparent; margin: 0.5%" data-toggle="modal"
+										data-target="#editBill">
+										<span class="glyphicon glyphicon-pencil"></span>
+									</button>
+									<button class="btn-primary" data-toggle="modal" data-target="#appoPrintBillingModal" title="Generat Bill"><span class="glyphicon glyphicon-print"></span></button>
+									<button class="btn-primary"
+										style="border: transparent; margin: 0.5%">
+										<span class="glyphicon glyphicon-remove"></span>
+									</button></td>
+
+
+							</tr>
+							
+
+
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker3').datetimepicker({
+                	
+                });
+				$('#datetimepicker4').datetimepicker({
+                	
+                });
+            });
+            
+        </script>

@@ -1,0 +1,246 @@
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card ">
+				<div class="card-header" data-background-color="purple">
+					<h4 class="title">Our User List</h4>
+					<!-- <p class="category">Choose NGO</p> -->
+					<button class="category btn btn-default btn-sm addBtnBg" data-toggle="modal"
+						data-target="#addUser">Add</button>
+				</div>
+				<div style="padding: 2%">
+					<div>
+					
+					 <!--  label><input type="radio" name="gender" value="male">Male</label--> 
+					
+						<label><input type="radio" name="optradio" value="name">
+							Name</label>
+					</div>
+
+					<input id="app-search" type="text" placeholder="Search By"
+						style="width: 75%; margin: 0px !important"> <input
+						type="button" class="search-btn" disabled="true"
+						onclick="search();"
+						style="width: 20%; color: #fff margin: 0px !important"
+						value="Search">
+
+				</div>
+				<!-- <div style="padding:2%"><input class="form-control"type="text" placeholder="Search...." style="width:100%"></div> -->
+				<div class="card-content table-responsive">
+					<table class="table table-hover ">
+						<thead class="text-primary headerdata" />
+						<tbody class="rowdata">
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var container = "content";
+	var urlPerfix = baseUrl;
+	url = urlPerfix + "/users/";
+	var jsonData = getJSON(url);
+	
+	function getJSON(url) {
+		$.ajax({
+			url : url,
+			type : "GET",
+			crossDomain : true,
+			timeout : 50000,
+			success : function(response) {
+				populateData(response);
+				initClickEvent();
+			},
+			error : function(xhr, status, error) {
+			}
+		});
+
+	}
+	
+	$(".add-user-btn").click(function() {
+
+		var name = $("#add_user_name").val();
+		var lastName = $("#add_user_last_name").val();
+		var email = $("#add_user_email").val();
+		var password = $("#add_user_password").val();
+		
+		var jsondata = {};
+		jsondata["name"]= name;
+		jsondata["lastName"]= lastName;
+		jsondata["email"]= email;
+		jsondata["password"]= password;
+					
+		var urlPerfix = baseUrl;
+		url = urlPerfix + "/users";
+		//alert(JSON.stringify(jsondata));
+		callAjaxPostJSON(url, "POST", "", jsondata);
+		clearForm();
+	});
+	
+	function initClickEvent() {
+		$(".delbtn").click(function() {
+			//alert("deleting...");
+			var idStr = $(this).attr("id");
+			var id = idStr.split('_')[2];
+			url = urlPerfix + "/users/" + id;
+			//alert(url);
+			$.ajax({
+				url : url,
+				type : "DELETE",
+				crossDomain : true,
+				timeout : 50000,
+				success : function(response) {
+				},
+				error : function(xhr, status, error) {
+				}
+			});
+		});
+	
+	$(".editbtn").click(function() {
+				
+				//alert("heloo.... ");
+				var id = $(this).attr("id").split('_')[2];
+				var firstName = $("#user_name_" + id).text();
+				var lastName = $("#user_lastName_" + id).text();
+				var email = $("#user_email_" + id).text();
+				var active = $("#user_active_" + id).text();
+				var role = $("#user_role_" + id).text();
+				//alert(" role  "+role);
+				
+				$(".edit_user_id").val(id);
+				$(".edit_user_name").val(firstName);
+				$(".edit_user_last_name").val(lastName);
+				$(".edit_user_email").val(email);
+				$(".edit_user_active").val(active);
+				$(".edit_user_role").val(role);
+
+			});
+	
+	$("#userUpdate").click(function() {
+		
+		var id = $("#edit_user_id").val();
+		var name = $("#edit_user_name").val();	
+		
+		var lastName = $(".edit_user_last_name").val();
+		var email = $(".edit_user_email").val();
+		var active = $(".edit_user_active option:selected" ).val();
+		var role =  $(".edit_user_role option:selected" ).val();
+				
+		var jsondata = {};
+		jsondata["id"]= id;
+		jsondata["name"]= name;
+		jsondata["lastName"]= lastName;
+		jsondata["active"] = active;
+		jsondata["email"]= email;
+
+		jsondata["role"]= role;
+
+					
+		var urlPerfix = baseUrl;
+		url = urlPerfix + "/users/"+id;
+		callAjaxPostJSON(url, "PUT", "", jsondata);
+		clearForm();
+		
+	});
+	
+	}
+		
+		function populateData(response) {
+         //alert("hello "+response);
+			
+			var headerdataStr = "";
+			
+			
+			 headerdataStr = headerdataStr + "<th>S.N.</th>" + "<th>Name</th>" + "<th>Last Name</th>"
+					+  "<th>E-mail</th>" +  "<th>Active</th>" + "<th>Role</th>"; 
+
+			$('.headerdata').html(headerdataStr);
+
+			var rowDataStr = ""; 
+			
+			 for (i = 0; i < response.length; i++) {
+				//alert(JSON.stringify(response[i].roles[0].role));
+
+				//var id = response[i].appointmentId;
+				
+				rowDataStr = rowDataStr
+						+ "<tr id='row_" + response[i].id + "'>"
+						
+						+ "<td id='user_id_" + response[i].id + "'>"
+						+ response[i].id
+						+ "</td>"
+						
+						+ "<td id='user_name_" + response[i].id + "'>"
+						+ response[i].name
+						+ "</td>"
+						
+						+ "<td id='user_lastName_" + response[i].id + "'>"
+						+ response[i].lastName
+						+ "</td>"
+						
+						+ "<td id='user_email_" + response[i].id + "'>"
+						+ response[i].email
+						+ "</td>"
+						
+						+ "<td id='user_active_" + response[i].id + "'>"
+						+ response[i].active
+						+ "</td>"
+						
+						+ "<td id='user_role_" + response[i].id + "'>"
+						+ response[i].roles[0].role
+						+ "</td>"
+						
+						+ "<td>"
+
+						+ "<button id='user_editbtn_" + response[i].id + "' class='btn-primary editbtn' style='border: transparent; margin: 0.5%' data-toggle='modal'" + "data-target='#editUser' title='Edit User'>"
+						+ "<span class='glyphicon glyphicon-pencil'></span>"
+						+ "</button>"
+
+						+ "<button id='user_delbtn_" + response[i].id + "' class='btn-primary delbtn' style='border: transparent; margin: 0.5%' title='Cancel User'>"
+						+ "<span class='glyphicon glyphicon-remove'></span>" + "</button></td>"
+
+						+ "</tr>";
+			} 
+			$('.rowdata').html(rowDataStr);
+
+		}
+	
+		
+		
+		function callAjaxPostJSON(urlMapping, callType, container, data) {
+
+			$.ajax({
+				type : callType,
+				contentType : "application/json",
+				url : urlMapping,
+				data : JSON.stringify(data),
+				crossDomain : true,
+				dataType : 'json',
+				timeout : 100000,
+				success : function(response) {
+					console.log("SUCCESS: ", response);
+					if (!response.error)
+						location.reload(true);
+					//window.location.reload();
+				},
+				error : function(xhr, status, error) {
+					console.log("ERROR: ", error);
+
+				},
+				done : function(e) {
+					console.log("DONE");
+				}
+			});
+
+		}
+		
+		
+		function clearForm() {
+
+			$(".form-control").val("");
+		}
+	</script>	

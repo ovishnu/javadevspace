@@ -1,0 +1,82 @@
+	<!-- Report Print -->
+	
+	<div id="DivIdToPrint" style="background:url(img/abcd.png);background-repeat:no-repeat;background-position:center;border-color:#CD853F;">
+	
+	
+	<div style="background-color:red !important;color:white;margin-top:3%;height:50px;text-align:center;padding-top:1px;padding-bottom:1px">
+	
+		<h3 >Daily Report</h3>
+	</div>
+	<div style="text-align:right;padding-top:1px;padding-bottom:1px;padding-right:5%">
+	
+		<p >Date:11/June/17</p>
+	</div>
+	<div >
+	
+		<table style="border:1px solid #84B54D;width:100%">
+			<thead style="background:#84B54D;color:white">
+				<tr>
+					<th >S.No</th>
+					<th>Service</th>
+					<th>Price</th>
+					<th>No Of Patients</th>
+					<th>Amount</th>
+					<th>Referred Doctor</th>
+					<th>Dr. Commission</th>
+					<th>Total Amount</th>
+				</tr>
+			</thead>
+			<tbody style="text-align:center">
+				<tr style="height:50px">
+					<td>1</td>
+					<td >KUB</td>
+					<td >500</td>
+					<td >5</td>
+					<td >2500</td>
+					<td >5</td>
+					<td >1250</td>
+					<td >1250</td>
+				</tr>
+				<tr>
+					<td >2</td>
+					<td >ANOMALY</td>
+					<td >1200</td>
+					<td >10</td>
+					<td >12000</td>
+					<td >8</td>
+					<td >4800</td>
+					<td >7200</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+		
+	<div style="padding-top:3%">
+		<span style=" margin-left: 72%; font-weight: bold">Grand Total: 8450.00</span>
+	</div>
+	
+	
+</div>
+<div style="text-align:center;margin-top:5%">
+		<button type="button" value="Print" onclick="printDiv();">Print</button>
+	</div>
+
+<script>
+function printDiv() 
+{
+
+  var divToPrint=document.getElementById('DivIdToPrint');
+
+  var newWin=window.open('','Print-Window');
+
+  newWin.document.open();
+
+  newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+  newWin.document.close();
+
+  setTimeout(function(){newWin.close();},10);
+
+}
+</script>

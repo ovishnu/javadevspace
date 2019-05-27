@@ -1,0 +1,199 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="orange">
+                    <span class="glyphicon glyphicon-user"></span>
+                </div>
+                <div class="card-content">
+                    <p class="category">Number of Doctors</p>
+                    <h3 class="title total-doctors"></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="green">
+                    <span class="glyphicon glyphicon-paperclip"></span>
+                </div>
+                <div class="card-content">
+                    <p class="category">Total Appointments</p>
+                    <h3 class="title total-appointments"></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="orange">
+                    <span class="glyphicon glyphicon-list"></span>
+                </div>
+                <div class="card-content">
+                    <p class="category">Number of Services</p>
+                    <h3 class="title total-services"></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="green">
+                    <span class="glyphicon glyphicon-paperclip"></span>
+                </div>
+                <div class="card-content">
+                    <p class="category">Total Cancel Appointments</p>
+                    <h3 class="title total-cancel-appointments"></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="orange">
+                    <span class="glyphicon glyphicon-user"></span>
+                </div>
+                <div class="card-content">
+                    <p class="category">Number of Users</p>
+                    <h3 class="title toatal-users">03</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+      
+        <h4 style="text-align: center;background: #86827d;padding: 1%;color:white">Add New Appointment</h4>
+
+        <div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label">First Name </label>
+            <div class="col-md-9 col-sm-6">
+                <input class="form-control pname add_appointment_firstName" val="" type="text" placeholder="First name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label">Last Name
+            </label>
+            <div class="col-md-9 col-sm-6">
+                <input class="form-control pname add_appointment_lastName" val="" type="text" placeholder="Last name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label" for="rolename">Services</label>
+            <div class="col-md-9 col-sm-6">
+                <select id="dates-field2" class="add_appointment_serviceTypeId multiselect-ui form-control" multiple="multiple">
+                    <option value="0">All Test</option>
+                    <option value="1">Blood Test</option>
+                    <option value="2">X-ray</option>
+                    <option value="3">ECG</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label">Age</label>
+            <div class="col-md-9 col-sm-6">
+                <input class="form-control add_appointment_age" val="" type="text" placeholder="Age">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label">Contact No </label>
+            <div class="col-md-9 col-sm-6">
+                <input class="form-control pcontact" val="" type="text" placeholder="Contact Number">
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label">Address</label>
+            <div class="col-md-9 col-sm-6">
+                <input class="form-control add_appointment_address" val="" type="text" placeholder="Address">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label">Gender</label>
+            <div class="col-md-9 col-sm-6">
+
+                <select class="form-control add_appointment_gender" val="">
+                    <option value="">Choose Gender...</option>
+
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label">Email</label>
+            <div class="col-md-9 col-sm-6">
+                <input class="form-control add_appointment_email" val="" type="text" placeholder="Email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label">Date </label>
+            <div class="col-md-9 col-sm-6">
+
+                <input type='date' placeholder="Select date" class="form-control add_appointment_dateTime" val="" id='datetimepicker2' />
+            </div>
+        </div>
+		<div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label">Slot</label>
+
+            <div class="col-md-9 col-sm-6">
+                <input class="form-control add_appointment_slot" val="" type="text" placeholder="Slot" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 col-sm-12 control-label">Ref. Doctor
+            </label>
+            <div class="col-md-9 col-sm-6">
+
+                <select class="form-control add_appointment_referredByDoctorId" style=" cursor: pointer;" val="">
+                    <option value="0">None</option>
+                    <option value="1">Dr. Vishal</option>
+                    <option value="2">Dr. Sahil</option>
+                    <option value="3">Dr. Kripa</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" style="text-align:right;padding-right:15px;padding-left:15px;margin-top: 17%;">
+            <button type="button" style="width:20%" class="btn btn-primary btn-sm add-appointment-btn">Add</button>
+           
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var container = "content";
+    var url = baseUrl + "/dashboard/stats";
+    //alert(url);
+    var jsonData = getJSON(url);
+
+    function getJSON(url) {
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            crossDomain: true,
+            timeout: 50000,
+            success: function(response) {
+                populateData(response);
+            },
+            error: function(xhr, status, error) {}
+        });
+
+    }
+
+    function populateData(response) {
+        //alert(JSON.stringify(response));
+        $('.total-doctors').text(response.totalDoctors);
+        $('.total-appointments').text(response.totalAppointments);
+        $('.total-services').text(response.totalServices);
+        $('.total-cancel-appointments').text(response.cancelAppointments);
+        $('.toatal-users').text(response.totalUsers);
+        $('.toatal-patients').text(response.totalPatients);
+        //{"totalAppointments":"3","cancelAppointments":null,"totalUsers":"2","totalDoctors":"2","totalServices":"2","patients":"2"}
+    }
+</script>

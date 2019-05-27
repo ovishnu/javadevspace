@@ -1,0 +1,171 @@
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card ">
+				<div class="card-header" data-background-color="purple">
+					<h4 class="title">Report List</h4>
+					
+					
+				</div>
+				
+				<!-- <div style="padding:2%"><input class="form-control"type="text" placeholder="Search...." style="width:100%"></div> -->
+				<div class="card-content table-responsive">
+					
+					<div class="card-content table-responsive" id="reportTable">
+					
+					<div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+						    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+						    <span></span> <b class="caret"></b>
+					</div>
+					<hr/>
+					<table class="table table-hover ">
+						<thead class="text-primary headerdata" />
+						<tbody class="rowdata" />
+					</table>
+					
+				</div>
+					
+				</div>
+				
+			</div>
+			<div class="row" style="text-align:center">
+						<button type="button" data-toggle="modal" data-target="#printReport"
+						class="btn btn-primary btn-sm report-print-btn"><span class="glyphicon glyphicon-print"></span>  Print</button>
+					</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+
+$(function() {
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MM DD YYYY') + ' - ' + end.format('MM DD YYYY'));
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+           'Last Year': [moment(), moment().subtract(1, 'year').endOf('year')]
+        }
+    }, cb);
+
+    cb(start, end);
+    
+});
+
+var container = "content";
+/* var urlPerfix = "http://localhost:9900";
+url = urlPerfix + "/report/all"; */
+
+var reportUrl = baseUrl + "/report/all";
+var jsonData = getJSON(reportUrl);
+
+
+function getJSON(url) {
+	$.ajax({
+		url : url,
+		type : "GET",
+		crossDomain : true,
+		timeout : 50000,
+		success : function(response) {
+
+			populateData(response);
+		},
+		error : function(xhr, status, error) {
+		}
+	});
+
+}
+
+
+function populateData(response) {
+		
+		var headerdataStr = "";
+		
+		
+		 headerdataStr = headerdataStr + "<th>S.No</th>" + "<th>Service</th>" + "<th>Price</th>"
+				+  "<th>Patients</th>" +  "<th>Amount</th>" + "<th>Ref. Doctors</th>" + "<th>Commission</th>" + "<th>Total Amount</th>"; 
+
+		$('.headerdata').html(headerdataStr);
+
+		var rowDataStr = ""; 
+		
+		 for (i = 0; i < response.length; i++) {
+
+			rowDataStr = rowDataStr
+					+ "<tr id='row_" + i + "'>"
+					
+					+ "<td id='service_Name_" + i + "'>"
+					+ i
+					+ "</td>"
+					
+					+ "<td class='text-danger' id='service_Name_" + i + "'>"
+					+ response[i].serviceName
+					+ "</td>"
+					
+					+ "<td  id='per_Service_Cost_" + i + "'>"
+					+ response[i].perServiceCost
+					+ "</td>"
+					
+					+ "<td  id='no_Of_Patient_" + i + "'>"
+					+ response[i].noOfPatient
+					+ "</td>"
+					
+					+ "<td  id='total_Service_Cost_" + i + "'>"
+					+ response[i].totalServiceCost
+					+ "</td>"
+					
+					+ "<td  id='no_Of_Ref_Doctor_" + i + "'>"
+					+ response[i].noOfRefDoctor
+					+ "</td>"
+					
+					+ "<td  id='doctor_Commission_" + i + "'>"
+					+ response[i].doctorCommission
+					+ "</td>"
+					
+					+ "<td  id='total_Amount_" + i + "'>"
+					+ response[i].totalAmount
+					+ "</td>"
+					
+					+ "</tr>";
+		} 
+		$('.rowdata').html(rowDataStr);
+
+	}
+
+
+
+
+</script>
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                	
+                });
+                
+                $( ".ranges" ).click(function() {
+              	  alert( "Handler for .click() called."+$('#reportrange span').text());
+              	url = urlPerfix + "/report/dates/"+$('#reportrange span').text();
+              	var jsonData = getJSON(url);
+
+              	  
+              	}); 
+            });
+            
+            
+          
+            
+        </script>
